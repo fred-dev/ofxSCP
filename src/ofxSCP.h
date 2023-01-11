@@ -57,8 +57,8 @@ public:
         Item item;
         item.host = host;
         item.user = user;
-        item.src = src;
-        item.dst = dst;
+        item.src = add_single_quotes(src);
+        item.dst = add_single_quotes(dst);
         item.recursive = recursive;
         queue.send(item);
         
@@ -80,6 +80,11 @@ private:
     
     ofThreadChannel<Item> queue;    // Thread channel for the copy queue
     std::atomic<bool> running;        // Flag indicating whether the thread is running
+    
+    string add_single_quotes(string input) {
+      
+         return "'" + input + "'";;
+    }
 };
 
 
