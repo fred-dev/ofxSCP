@@ -22,7 +22,16 @@ public:
     ofEvent<string> copyCompleteEvent;
     
     // Constructor
-    ofxSCP() : running(false) {}
+    ofxSCP() : running(false) {
+            #ifdef _WIN32
+    // check if OpenSSH is installed
+    int result = system("where ssh");
+    if (result != 0) {
+        ofLogError("ofxSCP") << "OpenSSH is not installed, class will not initialize";
+        return;
+    }
+    #endif
+    }
     
     ~ofxSCP(){
         stopThread();
